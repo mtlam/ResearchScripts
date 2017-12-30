@@ -4,7 +4,11 @@ Script to run and parse psrcat command line output
 
 import subprocess
 import numpy as np
-
+import sys
+if sys.version_info.major == 2:
+    fmap = map    
+elif sys.version_info.major == 3:
+    fmap = lambda x,*args: list(map(x,*args))
 
 ALL = "J*"
 
@@ -23,7 +27,7 @@ def psrcat(psrname,parameters,error=False):#,rettype="dict"):
         cmd = 'psrcat -o long_error -c "%s" %s' % (parameters,psrname)
     else:
         cmd = 'psrcat -c "%s" %s' % (parameters,psrname)
-    #print cmd
+
     p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
     out, err = p.communicate()
     lines = out.split('\n')
@@ -113,7 +117,7 @@ def psrcatlistold(psrnames,parameters,rettype="dict"):
         parameterslist = parameters.split()
         
     cmd = 'psrcat -c "%s" %s' % (parameters,psrnames)
-    print cmd
+
     p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
     out, err = p.communicate()
     lines = out.split('\n')
@@ -139,7 +143,6 @@ def psrcatlistold(psrnames,parameters,rettype="dict"):
         index = header.index(param)
 
         for i,entry in enumerate(entries): 
-            #print i,entry
             retval[psrnameslist[i]][param] = entry[index:].split()[0]
 
     return retval
@@ -149,13 +152,13 @@ def psrcatlistold(psrnames,parameters,rettype="dict"):
 def getValue(psr,parameter):
     return psrcat(psr,parameter)[parameter]
 def getValueList(psrs,parameter):
-    return map(lambda psr: getValue(psr,parameter),psrs)
+    return fmap(lambda psr: getValue(psr,parameter),psrs)
 
 
 # Helper to grab single parameter out of lists
 def paramToList(dictionary,parameter,sort=True):
     keys = np.array(dictionary.keys())
-    values = np.array(map(lambda x: dictionary[x][parameter],dictionary))
+    values = np.array(fmap(lambda x: dictionary[x][parameter],dictionary))
     if sort:
         inds = np.argsort(keys)
         return keys[inds],values[inds]
@@ -167,7 +170,7 @@ def paramToList(dictionary,parameter,sort=True):
 #test:
 if __name__=="__main__":
     #print psrcat(["J1713+0747","J2317+1439"],["P0","F0","BSURF_I"])
-    print psrcat("J1713+0747",["P0","BSURF_I"])
+    print(psrcat("J1713+0747",["P0","BSURF_I"]))
     #print psrcat("J1824-2452",["P0","BSURF_I"])
 
     x=psrcat(np.array(['J0358+5413', 'J0502+4654', 'J0525+1115', 'J0543+2329',
@@ -181,4 +184,4 @@ if __name__=="__main__":
        'J2124-3358', 'J2145-0750', 'J0835-4510', 'J0908-4913',
        'J1824-1945', 'J1833-0827', 'J0834-4159', 'J1702-4128',
        'J1721-3532', 'J1745-3040', 'J1809-1917', 'J1826-1334']),"BSURF_I")
-    print x
+    print(x)
