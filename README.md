@@ -1,4 +1,4 @@
-# ResearchScripts
+# Research Scripts
 Useful small scripts for research that people might want. All scripts should be Python 2/3 compatible.
 
 ## DISS.py
