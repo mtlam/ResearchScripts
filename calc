@@ -1,0 +1,14 @@
+#!/usr/bin/python
+import sys
+import numpy as np
+import math
+import scipy.special as special
+
+
+expr = "".join(sys.argv[1:])
+splitexpr = expr.split(";")
+for exp in splitexpr:
+    try:
+        print(eval(exp))
+    except SyntaxError:
+        exec(exp)
