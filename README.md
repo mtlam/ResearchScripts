@@ -20,5 +20,8 @@ Requires numpy.
 ## psrcat.py
 Parsing of psrcat command-line output.
 
+## psrstat.py
+Parsing of psrstat command-line output.
+
 ## sugit
 Command-line utility to lazily add, commit, and push to a repository.
