@@ -1,0 +1,33 @@
+#!/usr/bin/python
+from astropy.time import Time
+import datetime
+import sys
+
+
+helper = """
+Calculate and convert MJDs
+
+If no argument is supplied, will return the MJD now.
+Can otherwise supply:
+-a date in YYYY-MM-DD format
+-a time in YYYY-MM-DD HH:MM:SS format
+-an MJD to convert to a datetime
+"""
+
+if len(sys.argv) == 1:
+    now = datetime.datetime.utcnow()
+    t = Time(now)
+    print(now,"->",t.mjd)
+else:
+    if sys.argv[1] == "-h" or sys.argv[1] == "--help" or sys.argv[1] == "help":
+        print(helper)
+    elif len(sys.argv) == 3 and "-" in sys.argv[1] and ":" in sys.argv[2]:
+        t = Time(datetime.datetime.strptime(sys.argv[1]+" "+sys.argv[2],"%Y-%m-%d %H:%M:%S"))
+        print(t.datetime,"->",t.mjd)
+    elif "-" in sys.argv[1]:
+        t = Time(datetime.datetime.strptime(sys.argv[1],"%Y-%m-%d"))
+        print(t.datetime,"->",t.mjd)
+    else:
+        t = Time(float(sys.argv[1]),scale='utc',format='mjd')
+        print(t.mjd,"->",t.datetime)
+
