@@ -23,11 +23,11 @@ else:
         print(helper)
     elif len(sys.argv) == 3 and "-" in sys.argv[1] and ":" in sys.argv[2]:
         t = Time(datetime.datetime.strptime(sys.argv[1]+" "+sys.argv[2],"%Y-%m-%d %H:%M:%S"))
-        print(t.datetime,"->",t.mjd)
+        print("%s -> %i"%(t.datetime,t.mjd))
     elif "-" in sys.argv[1]:
         t = Time(datetime.datetime.strptime(sys.argv[1],"%Y-%m-%d"))
-        print(t.datetime,"->",t.mjd)
+        print("%s -> %i"%(t.datetime,t.mjd))
     else:
         t = Time(float(sys.argv[1]),scale='utc',format='mjd')
-        print(t.mjd,"->",t.datetime)
+        print("%i -> %s"%(t.mjd,repr(t.datetime)))
 
