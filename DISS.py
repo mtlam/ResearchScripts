@@ -49,10 +49,10 @@ def scale_tau_d(tau_d,nu_i,nu_f,beta=KOLMOGOROV_BETA):
     return tau_d*(nu_f/nu_i)**exp
 scale_taud = scale_tau_d
 
-def scale_dt_r(tau_d,nu_i,nu_f,beta=KOLMOGOROV_BETA):
+def scale_dt_r(tau_r,nu_i,nu_f,beta=KOLMOGOROV_BETA):
     if beta < 4:
         exp = beta/float(2-beta) #-2.2
     elif beta > 4:
         exp = 4.0/(beta-6)
-    return tau_d*(nu_f/nu_i)**exp
+    return tau_r*(nu_f/nu_i)**exp
 scale_dtr = scale_dt_r
