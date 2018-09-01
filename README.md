@@ -20,6 +20,9 @@ Requires numpy.
 ## psrcat.py
 Parsing of psrcat command-line output.
 
+## psrcatNE.py
+Type in a source and it will grab from psrcat and dump straight into NE2001.
+
 ## psrstat.py
 Parsing of psrstat command-line output.
 
