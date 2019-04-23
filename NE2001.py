@@ -4,6 +4,7 @@ Commands to run NE2001 and grab results
 import subprocess
 import os
 import sys
+import warnings
 
 if sys.version_info.major == 2:
     fmap = map    
@@ -19,7 +20,13 @@ def NE2001(l,b,DM_D,ndir=1,DIR='/home/michael/Research/Programs/NE2001/bin.NE200
     proc = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
     output = [line.strip() for line in proc.stdout]
     output = output[6:]
-    values = fmap(lambda x: float(x.split()[0]),output)
+    try:
+        values = fmap(lambda x: float(x.split()[0]),output)
+    except ValueError: #distance has ">" symbol
+        values = list()
+        values.append(float(output[0].split()[1]))
+        values.extend(fmap(lambda x: float(x.split()[0]),output[1:]))
+        warnings.warn("Warning: Distance is a lower limit")
     retval = dict()
     retval['input'] = dict()
     retval['input']['l'] = l
