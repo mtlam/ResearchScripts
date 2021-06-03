@@ -17,7 +17,7 @@ def NE2001(l,b,DM_D,ndir=1,DIR='/home/michael/Research/Programs/NE2001/bin.NE200
     cwd = os.getcwd()
     os.chdir(DIR)
     cmd = './NE2001 %f %f %f %i' % (l,b,DM_D,ndir)
-    proc = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
+    proc = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,encoding="ascii")
     output = [line.strip() for line in proc.stdout]
     output = output[6:]
     try:
