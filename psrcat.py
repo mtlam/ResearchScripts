@@ -28,7 +28,7 @@ def psrcat(psrname,parameters,error=False):#,rettype="dict"):
     else:
         cmd = 'psrcat -c "%s" %s' % (parameters,psrname)
 
-    p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
+    p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True,encoding="ascii")
     out, err = p.communicate()
     lines = out.split('\n')
     if lines[0][:7]=="WARNING":
